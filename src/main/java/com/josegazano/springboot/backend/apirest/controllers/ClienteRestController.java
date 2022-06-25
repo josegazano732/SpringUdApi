@@ -3,15 +3,19 @@ package com.josegazano.springboot.backend.apirest.controllers;
 
 import com.josegazano.springboot.backend.apirest.models.entity.Cliente;
 import com.josegazano.springboot.backend.apirest.models.service.IClienteService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,9 +64,19 @@ public class ClienteRestController {
 	}
 
 	@PostMapping("/clientes")
-	public ResponseEntity<Map<String, Object>> create(@RequestBody Cliente cliente) {
+	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Cliente cliente,BindingResult result) {
 		Cliente clienteNew = null;
 		Map<String, Object> response = new HashMap<>();
+                
+                if(result.hasErrors()){
+                    List<String> errors = new ArrayList<>();
+                    for (FieldError err: result.getFieldErrors()){
+                        errors.add("El campo '" + err.getField() +"' "+ err.getDefaultMessage());
+                    };
+                    response.put("errors", errors);
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+                }
+                
 		try {
 			clienteNew = clienteService.save(cliente);
 		} catch(DataAccessException e) {
@@ -77,11 +91,20 @@ public class ClienteRestController {
 	}
 
 	@PutMapping("/clientes/{id}")
-	public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable Long id) {
+	public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente,BindingResult result, @PathVariable Long id) {
 		Cliente clienteActual = clienteService.findById(id);
                 Cliente clienteUpdated= null;
                 
                 Map<String, Object> response = new HashMap<>();
+                
+                 if(result.hasErrors()){
+                    List<String> errors = new ArrayList<>();
+                    for (FieldError err: result.getFieldErrors()){
+                        errors.add("El campo '" + err.getField() +"' "+ err.getDefaultMessage());
+                    };
+                    response.put("errors", errors);
+                    return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+                }
                 
                 if(clienteActual == null){
                     response.put("mensaje", "Error: no se pudo editar, el cliente ID:".concat(id.toString().concat(" no existe ne la base de datos!")));
