@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -53,6 +53,8 @@ public class ClienteRestController {
 
 	@Autowired
 	private IClienteService clienteService;
+        
+        private final Logger log = LoggerFactory.getLogger(ClienteRestController.class);
 
 	@GetMapping("/clientes")
 	public List<Cliente> index() {
@@ -188,7 +190,7 @@ public class ClienteRestController {
             if(!archivo.isEmpty()){
                 String nombreArchivo = UUID.randomUUID().toString() +"_"+ archivo.getOriginalFilename().replace(" ", "");
                 Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-                
+                log.info(rutaArchivo.toString());
                 try {
                     Files.copy(archivo.getInputStream(), rutaArchivo);
                 } catch (IOException e) {
@@ -220,7 +222,8 @@ public class ClienteRestController {
         @GetMapping("/uploads/img/{nombreFoto:.+}")
         public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
             Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
-                Resource recurso = null;
+            log.info(rutaArchivo.toString());
+            Resource recurso = null;
             
             try {
                 recurso = new UrlResource(rutaArchivo.toUri());    
