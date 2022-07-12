@@ -41,7 +41,8 @@ public class Cliente implements Serializable {
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
-
+    
+    
     private String foto;
 
     public Long getId() {
