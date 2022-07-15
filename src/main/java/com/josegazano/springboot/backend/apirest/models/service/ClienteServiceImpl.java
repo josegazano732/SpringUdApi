@@ -2,6 +2,7 @@ package com.josegazano.springboot.backend.apirest.models.service;
 
 import com.josegazano.springboot.backend.apirest.models.dao.IClienteDao;
 import com.josegazano.springboot.backend.apirest.models.entity.Cliente;
+import com.josegazano.springboot.backend.apirest.models.entity.Region;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,12 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional
     public void delete(Long id) {
         clienteDao.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Region> findAllRegiones() {
+        return clienteDao.findAllRegiones();
     }
 
 }

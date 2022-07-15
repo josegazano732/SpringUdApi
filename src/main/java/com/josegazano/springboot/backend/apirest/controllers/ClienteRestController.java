@@ -1,6 +1,7 @@
 package com.josegazano.springboot.backend.apirest.controllers;
 
 import com.josegazano.springboot.backend.apirest.models.entity.Cliente;
+import com.josegazano.springboot.backend.apirest.models.entity.Region;
 import com.josegazano.springboot.backend.apirest.models.service.IClienteService;
 import com.josegazano.springboot.backend.apirest.models.service.IUploadFileService;
 import java.io.IOException;
@@ -137,6 +138,7 @@ public class ClienteRestController {
             clienteActual.setApellido(cliente.getApellido());
             clienteActual.setEmail(cliente.getEmail());
             clienteActual.setCreateAt(cliente.getCreateAt());
+            clienteActual.setRegion(cliente.getRegion());
 
             clienteUpdated = clienteService.save(clienteActual);
 
@@ -216,6 +218,11 @@ public class ClienteRestController {
         cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
 
         return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+    }
+    
+    @GetMapping("/clientes/regiones")
+    public List<Region> listarRegiones() {
+        return clienteService.findAllRegiones();
     }
 
 }

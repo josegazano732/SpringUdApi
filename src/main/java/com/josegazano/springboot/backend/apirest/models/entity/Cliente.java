@@ -1,13 +1,17 @@
 package com.josegazano.springboot.backend.apirest.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,7 +29,7 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotEmpty(message = "No puede estar vacio")
-    @Size(min = 4, max = 15, message = "El tamaño tiene que estar entre 4 y 15")
+    @Size(min = 4, max = 25, message = "El tamaño tiene que estar entre 4 y 15")
     @Column(nullable = false)
     private String nombre;
 
@@ -37,14 +41,19 @@ public class Cliente implements Serializable {
     @Column(nullable = false, unique = false)
     private String email;
 
-    @NotNull(message = "No puede estar vacio")
+    
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
     
-    
     private String foto;
-
+    
+    @NotNull(message = "El campo no puede ser vacio")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    private Region region;
+    
     public Long getId() {
         return id;
     }
@@ -92,6 +101,18 @@ public class Cliente implements Serializable {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+   
+    
+    
 
     private static final long serialVersionUID = 1L;
 }

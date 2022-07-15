@@ -2,6 +2,7 @@
 package com.josegazano.springboot.backend.apirest.models.service;
 
 import com.josegazano.springboot.backend.apirest.models.entity.Cliente;
+import com.josegazano.springboot.backend.apirest.models.entity.Region;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +22,7 @@ public interface IClienteService {
 	public Cliente findById(Long id);
 	
 	public void delete(Long id);
+        
+        public List<Region> findAllRegiones();
 
 }
