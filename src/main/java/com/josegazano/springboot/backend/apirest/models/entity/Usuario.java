@@ -79,4 +79,8 @@ public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public boolean getEnabled() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
