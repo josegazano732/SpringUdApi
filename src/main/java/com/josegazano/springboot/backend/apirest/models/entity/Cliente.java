@@ -63,7 +63,7 @@ public class Cliente implements Serializable {
     private List<Factura> facturas;
 
     public Cliente(List<Factura> facturas) {
-        this.facturas = new ArrayList<>();
+        facturas = new ArrayList<>();
     }
     
     
