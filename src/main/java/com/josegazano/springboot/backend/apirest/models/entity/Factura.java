@@ -40,6 +40,7 @@ public class Factura implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date createAt;
     
+    //Muchas facturas tienen relacion con un cliente.
     @ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "cliente_id") opcional.
     private Cliente cliente;
@@ -106,6 +107,14 @@ public class Factura implements Serializable{
 
     public void setItems(List<ItemFactura> items) {
         this.items = items;
+    }
+    
+    public Double getTotal(){
+        Double total = 0.00;
+        for(ItemFactura item: items){
+        total += item.getImporte();
+        }
+        return total;
     }
     
     

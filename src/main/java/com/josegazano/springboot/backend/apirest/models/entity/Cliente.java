@@ -58,7 +58,7 @@ public class Cliente implements Serializable {
     private Region region;
     
     
-    //un cliente muchas facturas
+    //Un cliente tiene relacion con muchas facturas
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Factura> facturas;
 
