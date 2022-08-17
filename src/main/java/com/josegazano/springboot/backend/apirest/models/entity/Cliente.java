@@ -44,30 +44,27 @@ public class Cliente implements Serializable {
     @Column(nullable = false, unique = false)
     private String email;
 
-    
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createAt;
-    
+
     private String foto;
-    
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Region region;
-    
-    
-    //Un cliente tiene relacion con muchas facturas
+
+    //Ignora loop infinito
+    @JsonIgnoreProperties({"cliente", "hibernateLazyInitializer", "handler"})
+    //Un cliente tiene relacion con muchas facturas.
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Factura> facturas;
 
-    public Cliente(List<Factura> facturas) {
-        facturas = new ArrayList<>();
+    public Cliente() {
+        this.facturas = new ArrayList<>();
     }
-    
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -132,8 +129,6 @@ public class Cliente implements Serializable {
         this.facturas = facturas;
     }
 
-   
-    
     
 
     private static final long serialVersionUID = 1L;

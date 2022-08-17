@@ -1,5 +1,6 @@
 package com.josegazano.springboot.backend.apirest.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
  * @author jlg
  */
 @Entity
-@Table(name = "facturas_items")
+@Table(name = "facturas_items") //ItemFactura de alguna manera esta relacionado con dos Entity.
 public class ItemFactura implements Serializable {
 
     @Id
@@ -24,6 +25,7 @@ public class ItemFactura implements Serializable {
 
     private Integer cantidad;
     
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     // La relacion muchos ItemFactura contienen un producto.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
