@@ -78,5 +78,5 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional
     public void deleteFacturaById(Long id) {
         facturaDao.deleteById(id);
-
+    }
 }
