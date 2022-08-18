@@ -25,8 +25,10 @@ public class FacturaRestController {
     private IClienteService clienteService;
     
     @GetMapping("/facturas/{id}")
-    @ResponseStatus(code=HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public Factura show(@PathVariable Long id){
         return clienteService.findFacturaById(id);
     }
+
+
 }
