@@ -2,7 +2,9 @@
 package com.josegazano.springboot.backend.apirest.controllers;
 
 import com.josegazano.springboot.backend.apirest.models.entity.Factura;
+import com.josegazano.springboot.backend.apirest.models.entity.Producto;
 import com.josegazano.springboot.backend.apirest.models.service.IClienteService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,6 +37,12 @@ public class FacturaRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         clienteService.deleteFacturaById(id);
+    }
+    
+    @GetMapping("/facturas/filtrar-productos/{term}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Producto> filtrarProductos(@PathVariable String term){
+        return clienteService.findProductoByNombre(term);
     }
 
 }
