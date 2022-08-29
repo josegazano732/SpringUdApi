@@ -42,7 +42,7 @@ public class Factura implements Serializable{
     private Date createAt;
     
     // Ignora loop infinito
-    @JsonIgnoreProperties({"facturas","hibernateLazyInitializer","handler"})
+    @JsonIgnoreProperties(value={"facturas","hibernateLazyInitializer","handler"}, allowSetters = true)
     //Muchas facturas tienen relacion con un cliente.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
