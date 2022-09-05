@@ -1,4 +1,3 @@
-
 package com.josegazano.springboot.backend.apirest.controllers;
 
 import com.josegazano.springboot.backend.apirest.models.entity.Factura;
@@ -26,36 +25,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class FacturaRestController {
-    
+
     @Autowired
     private IClienteService clienteService;
-    
+
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/facturas/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Factura show(@PathVariable Long id){
+    public Factura show(@PathVariable Long id) {
         return clienteService.findFacturaById(id);
     }
-    
-    @Secured({"ROLE_ADMIN"})
+
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/facturas/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         clienteService.deleteFacturaById(id);
     }
-    
+
     @Secured({"ROLE_ADMIN"})
     @GetMapping("/facturas/filtrar-productos/{term}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Producto> filtrarProductos(@PathVariable String term){
+    public List<Producto> filtrarProductos(@PathVariable String term) {
         return clienteService.findProductoByNombre(term);
     }
-    
+
     @Secured({"ROLE_ADMIN"})
     @PostMapping("/facturas")
     @ResponseStatus(HttpStatus.CREATED)
-    public Factura crear(@RequestBody Factura factura){
-        return  clienteService.saveFactura(factura);
+    public Factura crear(@RequestBody Factura factura) {
+        return clienteService.saveFactura(factura);
     }
 
 }
