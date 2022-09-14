@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author jlg
  */
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://app-cliente-5b939.web.app"})
 @RestController
 @RequestMapping("/api")
 public class FacturaRestController {

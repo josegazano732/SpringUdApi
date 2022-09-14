@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author JLG
  */
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"https://app-cliente-5b939.web.app"})
 @RestController
 @RequestMapping("/api")
 public class ClienteRestController {
